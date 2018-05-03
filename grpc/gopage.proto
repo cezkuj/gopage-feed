@@ -3,10 +3,11 @@ syntax = "proto3";
 package gopage;
 
 service Gopage {
-  rpc get1()returns (Number){}
-  rpc get2()returns (Number){}
+  rpc get1(GetParams) returns (Number) {}
+  rpc get2(GetParams) returns (Number) {}
 }
 
 message Number {
-  int32 value = 0;
-{
+  int32 value = 1;
+}
+message GetParams {}

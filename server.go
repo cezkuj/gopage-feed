@@ -15,12 +15,12 @@ import (
 type gopageServer struct {
 }
 
-func (s *gopageServer) get1(ctx context.Context) (*pb.Number, error) {
-	return &pb.Feature{2}, nil
+func (s *gopageServer) Get1(ctx context.Context, n *pb.GetParams) (*pb.Number, error) {
+	return &pb.Number{Value:1}, nil
 }
 
-func (s *gopageServer) get2(ctx context.Context) (*pb.Number, error) {
-	return &pb.Number{2}, nil
+func (s *gopageServer) Get2(ctx context.Context, n *pb.GetParams) (*pb.Number, error) {
+	return &pb.Number{Value:2}, nil
 }
 
 func main() {
@@ -31,12 +31,12 @@ func main() {
 		io.WriteString(w, "2")
 	})
 	go log.Fatal(http.ListenAndServe(":8001", nil))
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 8002))
+	lis, err := net.Listen("tcp", ":8002")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
-	pb.RegisterRouteGuideServer(grpcServer, &routeGuideServer{})
+	pb.RegisterGopageServer(grpcServer, &gopageServer{})
 	grpcServer.Serve(lis)
 
 }
