@@ -16,11 +16,11 @@ type gopageServer struct {
 }
 
 func (s *gopageServer) Get1(ctx context.Context, n *pb.GetParams) (*pb.Number, error) {
-	return &pb.Number{Value:1}, nil
+	return &pb.Number{Value: 1}, nil
 }
 
 func (s *gopageServer) Get2(ctx context.Context, n *pb.GetParams) (*pb.Number, error) {
-	return &pb.Number{Value:2}, nil
+	return &pb.Number{Value: 2}, nil
 }
 
 func main() {
@@ -30,7 +30,7 @@ func main() {
 	http.HandleFunc("/get2", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "2")
 	})
-	go log.Fatal(http.ListenAndServe(":8001", nil))
+	go func(){ log.Fatal(http.ListenAndServe(":8001", nil))}()
 	lis, err := net.Listen("tcp", ":8002")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
